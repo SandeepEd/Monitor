@@ -1,11 +1,11 @@
 // useDeviceStatus.ts
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export const useDeviceStatus = (statusGetter: () => Promise<string>) => {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  console.log('useDeviceStatus', statusGetter)
+  console.log("useDeviceStatus", statusGetter);
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -20,7 +20,7 @@ export const useDeviceStatus = (statusGetter: () => Promise<string>) => {
 
     fetchStatus();
 
-    const intervalId = setInterval(fetchStatus, 3000);
+    const intervalId = setInterval(fetchStatus, 30000);
 
     return () => clearInterval(intervalId);
   }, [statusGetter]);

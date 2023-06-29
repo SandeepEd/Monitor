@@ -1,9 +1,10 @@
-import client from '../util/http';
+import client from "../util/http";
 
 class DeviceService {
   private static instance: DeviceService;
+  private requestQueue: Promise<any> = Promise.resolve();
 
-  // Singleton instance
+  // Singleton instance not required for this service, but it's a good practice
   public static getInstance(): DeviceService {
     if (!DeviceService.instance) {
       DeviceService.instance = new DeviceService();
@@ -13,24 +14,35 @@ class DeviceService {
   }
 
   public sendCommand = async (command: string) => {
-    const response = await client.get(`/?command=${command}`);
-    return response.data;
-  }
+    this.requestQueue = this.requestQueue
+      .then(() => client.get(`/?command=${command}`))
+      .catch((error) => {
+        console.error("Error:", error);
+        throw error;
+      });
+
+    // Chain another `then` to ensure the promise chain returns Promise<string>
+    const resultPromise = this.requestQueue.then(
+      (response) => response.data as string
+    );
+
+    return resultPromise; // Return the Promise<string>
+  };
 
   public getHardwareStatus = async () => {
-    const data = await this.sendCommand('GetStatus');
+    const data = await this.sendCommand("GetStatus");
     return data;
-  }
+  };
 
   public getVideoInputStatus = async () => {
-    const data = await this.sendCommand('GetVideoInput');
+    const data = await this.sendCommand("GetVideoInput");
     return data;
-  }
+  };
 
   public getAudioInputStatus = async () => {
-    const data = await this.sendCommand('GetAudioInput');
+    const data = await this.sendCommand("GetAudioInput");
     return data;
-  }
+  };
 }
 
 export default DeviceService;
