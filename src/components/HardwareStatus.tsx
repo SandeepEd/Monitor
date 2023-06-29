@@ -1,7 +1,7 @@
-// HardwareStatusComponent.tsx
 import React, { useEffect, useState } from 'react';
 import DeviceService from '../services/device-service';
 import Card from '../container/Card';
+import Loading from './Loading';
 
 type Status = {
   mode: string;
@@ -54,7 +54,7 @@ const HardwareStatusComponent: React.FC = () => {
 
     fetchStatus();
 
-    const intervalId = setInterval(fetchStatus, 3000); // Fetches every 30 seconds
+    const intervalId = setInterval(fetchStatus, 30000); // Fetches every 30 seconds
 
     return () => clearInterval(intervalId); // cleanup function to stop interval when component unmounts
   }, []);
@@ -78,23 +78,23 @@ const HardwareStatusComponent: React.FC = () => {
     return <div className="text-red-500">An error occurred: {error}</div>;
   }
 
-  if (status === null) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <Card>
-    <div className=" p-5 rounded-lg shadow-md mb-5 text-left">
-      <h2 className="text-xl font-semibold mb-2 text-blue-700">Hardware Status</h2>
-      <ul className="space-y-2">
-        <li><strong>Encoder 1 Mode:</strong> {status.enc1.mode}</li>
-        <li><strong>Encoder 1 State:</strong> {getStateMessage(status.enc1.state)}</li>
-        <li><strong>Encoder 2 Mode:</strong> {status.enc2.mode}</li>
-        <li><strong>Encoder 2 State:</strong> {getStateMessage(status.enc2.state)}</li>
-        <li><strong>File Transfer:</strong> {status.filetransfer}</li>
-        <li><strong>Name:</strong> {status.name}</li>
-      </ul>
-    </div>
+      {status === null ?
+        <Loading statusType='Hardware Status' /> :
+        <div className=" rounded-lg shadow-md text-left">
+          <h2 className="text-xl font-semibold mb-2 text-blue-700">Hardware Status</h2>
+          <ul className="space-y-2">
+          <li><strong>Name:</strong> {status.name}</li>
+            <li><strong>Encoder 1 Mode:</strong> {status.enc1.mode}</li>
+            <li><strong>Encoder 1 State:</strong> {getStateMessage(status.enc1.state)}</li>
+            <li><strong>Encoder 2 Mode:</strong> {status.enc2.mode}</li>
+            <li><strong>Encoder 2 State:</strong> {getStateMessage(status.enc2.state)}</li>
+            <li><strong>File Transfer:</strong> {status.filetransfer}</li>
+          </ul>
+        </div>
+      }
+
     </Card>
   );
 };
