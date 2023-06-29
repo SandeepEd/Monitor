@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import AudioInputComponent from './components/AudioInput'
+import HardwareStatus from './components/HardwareStatus'
+import VideoInputComponent from './components/VideoInput'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-    <div className='text-3xl font-bold'>
-      sample text
-    </div>
-      </>
+      <HardwareStatus />
+      <VideoInputComponent />
+      <AudioInputComponent />
+    </>
   )
 }
 
