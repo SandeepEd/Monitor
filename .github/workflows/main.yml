@@ -20,7 +20,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         source: "."
-        target: "/home/sandeep/Monitor"
+        target: "/home/sandeep-test/Monitor"
 
     - name: Install Dependencies and Build on server
       uses: appleboy/ssh-action@master
@@ -29,7 +29,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          cd /home/sandeep/Monitor
+          cd /home/sandeep-test/Monitor
           npm install
           npm run build
 
@@ -40,4 +40,4 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          sudo cp -r /home/sandeep/Monitor/dist/* /var/www/html
+          sudo cp -r /home/sandeep-test/Monitor/dist/* /var/www/html
