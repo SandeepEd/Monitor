@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://admin:t3st1u1999@129.79.38.39/Monarch/syncconnect/sdk.aspx',
+        target: 'http://129.79.38.39/Monarch/syncconnect/sdk.aspx',
+        changeOrigin: true, 
       },
     },
   },
