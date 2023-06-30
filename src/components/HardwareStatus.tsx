@@ -24,10 +24,8 @@ const HardwareStatusComponent: React.FC = () => {
       try {
         const service = DeviceService.getInstance();
         const rawStatus = await service.getHardwareStatus();
-        console.log(rawStatus);
 
         const statusArray = rawStatus.split(",");
-        console.log(statusArray);
         if (statusArray.length < 6) throw new Error("Invalid status data received");
 
         const statusObj: HardwareStatus = {
@@ -42,8 +40,6 @@ const HardwareStatusComponent: React.FC = () => {
           filetransfer: statusArray[4].split(":")[1],
           name: statusArray[5].split(":")[1],
         }
-
-        console.log(statusObj);
 
         setStatus(statusObj);
         setError(null);
