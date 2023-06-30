@@ -5,8 +5,6 @@ export const useDeviceStatus = (statusGetter: () => Promise<string>) => {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  console.log("useDeviceStatus", statusGetter);
-
   useEffect(() => {
     const fetchStatus = async () => {
       try {

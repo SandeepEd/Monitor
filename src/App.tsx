@@ -2,6 +2,7 @@ import './App.css'
 import AudioInputComponent from './components/AudioInput'
 import HardwareStatus from './components/HardwareStatus'
 import NavBar from './components/Navbar'
+import StreamingComponent from './components/Streaming'
 import VideoInputComponent from './components/VideoInput'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <HardwareStatus />
       <VideoInputComponent />
       <AudioInputComponent />
+      <StreamingComponent />
     </>
   )
 }
