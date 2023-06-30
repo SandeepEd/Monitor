@@ -4,7 +4,6 @@ class DeviceService {
   private static instance: DeviceService;
   private requestQueue: Promise<any> = Promise.resolve();
 
-  // Singleton instance not required for this service, but it's a good practice
   public static getInstance(): DeviceService {
     if (!DeviceService.instance) {
       DeviceService.instance = new DeviceService();
