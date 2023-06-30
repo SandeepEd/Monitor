@@ -42,6 +42,11 @@ class DeviceService {
     const data = await this.sendCommand("GetAudioInput");
     return data;
   };
+
+  public getInputStatus = async () => {
+    const data = await this.sendCommand("GetInputStatus");
+    return data;
+  };
 }
 
 export default DeviceService;
