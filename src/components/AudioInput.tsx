@@ -9,7 +9,7 @@ const AudioInputComponent: React.FC = () => {
   const { status: inputStatus, error } = useDeviceStatus(DeviceService.getInstance().getAudioInputStatus);
 
   if (error) {
-    return <ErrorComponent errorMessage={error} />;
+    return <ErrorComponent errorMessage={error} labelMessage='audio input status' />;
   }
 
   const formattedResult = inputStatus?.split(":")[1];

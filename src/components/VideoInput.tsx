@@ -10,7 +10,7 @@ const VideoInputComponent: React.FC = () => {
   const { status: inputStatus, error } = useDeviceStatus(DeviceService.getInstance().getVideoInputStatus);
 
   if (error) {
-    return <ErrorComponent errorMessage={error} />;
+    return <ErrorComponent errorMessage={error} labelMessage='video input status' />;
   }
 
   const formattedResult = inputStatus?.split(":")[1];

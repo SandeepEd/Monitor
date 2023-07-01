@@ -48,7 +48,7 @@ const StreamingComponent: React.FC = () => {
     }, []);
 
     if (error) {
-        return <ErrorComponent errorMessage={error} />;
+        return <ErrorComponent errorMessage={error} labelMessage={'streaming status'} />;
     }
 
     return (
