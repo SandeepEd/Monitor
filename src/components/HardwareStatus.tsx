@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DeviceService from '../services/device-service';
 import Card from '../container/Card';
 import Loading from './Loading';
+import ErrorComponent from './Error';
 
 type Status = {
   mode: string;
@@ -24,7 +25,13 @@ const HardwareStatusComponent: React.FC = () => {
       try {
         const service = DeviceService.getInstance();
         const rawStatus = await service.getHardwareStatus();
-
+  
+        if (rawStatus === "RETRY") {
+          throw new Error(
+            "The server is busy processing another request. Your request will be retried again in next 30 secs. If the problem still persists, please check if the endpoint is working correctly."
+          );
+        }
+  
         const statusArray = rawStatus.split(",");
         if (statusArray.length < 6) throw new Error("Invalid status data received");
 
@@ -39,7 +46,7 @@ const HardwareStatusComponent: React.FC = () => {
           },
           filetransfer: statusArray[4].split(":")[1],
           name: statusArray[5].split(":")[1],
-        }
+        };
 
         setStatus(statusObj);
         setError(null);
@@ -71,7 +78,7 @@ const HardwareStatusComponent: React.FC = () => {
   }
 
   if (error) {
-    return <div className="text-red-500">An error occurred: {error}</div>;
+    return <ErrorComponent errorMessage={error} />;
   }
 
   return (
@@ -79,7 +86,7 @@ const HardwareStatusComponent: React.FC = () => {
       {status === null ?
         <Loading statusType='Hardware Status' /> :
         <div className=" rounded-lg shadow-md text-left">
-          <h2 className="text-xl font-semibold mb-2 text-blue-700">Hardware Status</h2>
+          <h2 className="text-xl font-semibold mb-2 text-blue-700">Hardware</h2>
           <ul className="space-y-2">
           <li><strong>Name:</strong> {status.name}</li>
             <li><strong>Encoder 1 Mode:</strong> {status.enc1.mode}</li>

@@ -9,6 +9,11 @@ export const useDeviceStatus = (statusGetter: () => Promise<string>) => {
     const fetchStatus = async () => {
       try {
         const status = await statusGetter();
+        if (status === "RETRY") {
+          throw new Error(
+            "The server is busy processing another request. Your request will be retried again in next 30 secs. If the problem still persists, please check if the endpoint is working correctly."
+          );
+        }
         setStatus(status);
         setError(null);
       } catch (error: any) {

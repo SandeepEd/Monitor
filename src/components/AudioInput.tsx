@@ -3,12 +3,13 @@ import DeviceService from '../services/device-service';
 import Card from '../container/Card';
 import { useDeviceStatus } from '../hooks/useDeviceStatus';
 import Loading from './Loading';
+import ErrorComponent from './Error';
 
 const AudioInputComponent: React.FC = () => {
   const { status: inputStatus, error } = useDeviceStatus(DeviceService.getInstance().getAudioInputStatus);
 
   if (error) {
-    return <div className="text-red-500">An error occurred: {error}</div>;
+    return <ErrorComponent errorMessage={error} />;
   }
 
   const formattedResult = inputStatus?.split(":")[1];
@@ -21,7 +22,7 @@ const AudioInputComponent: React.FC = () => {
           <Loading statusType='Audio Input Status' />
         ) : (
           <div>
-            <h2 className="text-xl font-semibold text-blue-700">Audio Input Status</h2>
+            <h2 className="text-xl font-semibold text-blue-700">Audio Input</h2>
             <p className="mt-2 font-normal text-sm"><strong>{formattedResult} </strong> 
                  ports are currently being used</p>
           </div>
