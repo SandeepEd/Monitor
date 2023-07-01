@@ -78,7 +78,7 @@ const HardwareStatusComponent: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorComponent errorMessage={error} />;
+    return <ErrorComponent errorMessage={error} labelMessage={'hardware status'} />;
   }
 
   return (
